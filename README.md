@@ -47,8 +47,24 @@ core config:
   dbpass: mypass
   dbname: my_database
   extra-php: |
-    define( 'WP_DEBUG', true );
+    // Enabling debug log but not display them
+    define('WP_DEBUG', true);
+    define('WP_DEBUG_LOG', true);
+    define('WP_DEBUG_DISPLAY', false);
+
+    define('WP_POST_REVISIONS', 50 );
+    define('AUTOMATIC_UPDATER_DISABLED', false);
+    define('WP_AUTO_UPDATE_CORE', true);
+    define('DISALLOW_FILE_EDIT', true);
+
     define( 'WP_POST_REVISIONS', 50 );
+    define( 'ABSPATH', dirname( __FILE__ ) . '/wp-cms/' );
+
+    define ('WP_CONTENT_FOLDERNAME', 'wp-content') ;
+    define ('WP_CONTENT_DIR', __DIR__ . '/wp-content/') ;
+
+    define ('WP_SITE_URL', 'http://virageadroite.fr/') ;
+    define ('WP_CONTENT_URL', WP_SITE_URL . WP_CONTENT_FOLDERNAME) ;
 ```
 
 Beware, never add your `wp-cli.local.yml` file to Git, it may contains sensitive information.
@@ -64,6 +80,7 @@ bin/wp core download
 bin/wp core config
 bin/wp core install
 mv public/wp-cms/wp-config.php public
+cp dist/apache2.4/sample.htaccess public/.htaccess
 ```
 
 If your local configuration is not defined, you must pass all the required parameters. You can get more details by
